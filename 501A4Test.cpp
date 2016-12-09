@@ -28,15 +28,14 @@ char* readFile(char * filename)
 	else return "";
 }
 
-void testWaveFile() {
-	char* filename = "DrumsDry.wav";
-	char* testfilename = "test.wav";
+void testWaveFile(char* inputFileName, char* outputFileName) {
+	
 	//char* filename = "test.wav";
 	WaveFile w_DryRecording;
-	w_DryRecording.ReadWaveFile(filename);
-	w_DryRecording.WriteWaveFile(testfilename);
+	w_DryRecording.ReadWaveFile(inputFileName);
+	w_DryRecording.WriteWaveFile(outputFileName);
 	WaveFile w_Test;
-	w_Test.ReadWaveFile(testfilename);
+	w_Test.ReadWaveFile(outputFileName);
 	LPBYTE lpwD = w_DryRecording.GetData();
 	long lpwDSize = (long)w_DryRecording.GetSize();
 	LPBYTE lpwT = w_Test.GetData();
@@ -53,8 +52,16 @@ void testWaveFile() {
 	}
 	assert(b);
 }
+void testConvolve(char* inputFileName, char* outputFileName,bool bLevel1) {
+	WaveFile w_DryRecording;
+	w_DryRecording.ReadWaveFile(inputFileName);
+	w_DryRecording.Convolve("im_BIGHALLE001M2S.wav","test.wav", bLevel1);
+}
 void main(int argc, char *argv[])
 {
-	testWaveFile();
+	char* inFileName = "DrumsDry.wav";
+	char* outFileName = "test.wav";
+	//testWaveFile(inFileName, outFileName);
+	testConvolve(inFileName, outFileName,true);
 }
 #endif
